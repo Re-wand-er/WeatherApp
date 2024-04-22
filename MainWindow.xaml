@@ -1,0 +1,107 @@
+﻿<Window x:Class="WeatherApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WeatherApp"
+        mc:Ignorable="d"
+        Icon="Icons/AppIcon.png"
+        
+        
+        ResizeMode="CanResize"
+        Width   ="700" Height   ="575"
+        MinWidth="400" MinHeight="450"
+        MaxWidth="900" MaxHeight="600"
+        
+        Title="Weather">
+
+    <Grid VerticalAlignment="Stretch" Name = "Space">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name ="Crey" MinWidth="175" MaxWidth="250"></ColumnDefinition>
+            <ColumnDefinition x:Name="Splitter" Width="auto"  ></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="Grid" Grid.Column="0" Background="Gray"/>
+
+        <GridSplitter Grid.Column="1" ShowsPreview="False" Width="3"
+        HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
+
+        <StackPanel Orientation="Vertical">
+            <ComboBox Name="Cities_ComboBox" Grid.Column="0"  
+                  Height="25" Width="140" VerticalAlignment="Top" Margin="15" 
+                  IsEditable="True" IsReadOnly="False"
+                  MaxDropDownHeight="216"
+                  SelectionChanged="Cities_SelectionChanged" 
+                  StaysOpenOnEdit="True">
+
+                <ComboBox.ItemTemplate >
+                    <DataTemplate>
+                        <StackPanel Name="Chose" Orientation="Horizontal" Width="100" Height="20">
+                            <TextBlock Text="{Binding City_Name_rus}" FontSize="12" />
+                            <TextBlock Text="{Binding Country}" FontSize="8"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+
+            </ComboBox>
+
+
+            <ListBox Name ="Cities_ListBox" DockPanel.Dock="Bottom" Height="475" Width="160" 
+                     BorderThickness="1" Background="Gray"
+                     SelectionChanged="Cities_SelectionChanged"
+                     VirtualizingPanel.ScrollUnit="Pixel">
+                
+                
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        
+                        <StackPanel Orientation="Horizontal" Width="175" Height="20">
+
+                            <TextBlock Text="{Binding City_Name_rus}" FontSize="12" />
+                            <TextBlock Text="{Binding Country}" FontSize="8"/>
+
+                        </StackPanel>
+
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                
+                
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        
+                        <MenuItem Header="Удалить" Click="Remove_MenuItem_Click">
+                            <MenuItem.Icon>
+                                <Image Source="Icons/remove_cross_icon.png" Height="auto" Width="auto"
+                                       VerticalAlignment="Center"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        
+                    </ContextMenu>
+                </ListBox.ContextMenu>
+                
+            </ListBox>
+
+        </StackPanel>
+
+        <Canvas Grid.Column="2">
+            <Button Name="Button_Add" Click="Button_Add_Click"
+                    Height="25" Width="25" 
+                    Canvas.Top="10" Canvas.Right="10">
+                <Image Source="Icons/plus_icon.png" Height="15" />
+            </Button>
+        </Canvas>
+
+        <StackPanel Grid.Column="2" Orientation="Vertical">
+
+            <TextBlock x:Name="Chosen_City" Height="30"
+                    FontSize="18" Width="252" Margin="15" TextAlignment="Center"/>
+
+            <TextBlock Name="Output" Height="15" Width="50"/>
+
+            <InkCanvas EditingMode="InkAndGesture" Height="478"/>
+        </StackPanel>
+    </Grid>
+
+</Window>
